@@ -27,6 +27,7 @@ class MainWindow(arcade.Window):
         self.keys.remove(symbol)
 
 
+# тест
 if __name__ == "__main__":
     print(arcade.color.AERO_BLUE)
     window = MainWindow(*WINDOW_SIZES, "Main")
