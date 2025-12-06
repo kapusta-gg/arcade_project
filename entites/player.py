@@ -17,13 +17,21 @@ class Player(arcade.Sprite):
     def _setup(self):
         self.velocity = 0, 0
 
-    def update(self, delta_time, keys: set):
+    def update(self, delta_time: float, keys: set):
         self.velocity = Player._update_velocity(keys)
         self.center_x = self.center_x + self.change_x * delta_time
         self.center_y = self.center_y + self.change_y * delta_time
 
     @classmethod
     def _update_velocity(cls, keys: set) -> tuple[int, int]:
+        '''
+        Обновление вектора скорости игрока
+
+        :param keys: Множество нажатых кнопок
+        :type keys: set
+        :return: список векторов скорости
+        :rtype: tuple[int, int]
+        '''
         x_vel = y_vel = 0
         x_vel -= cls.SPEED if 97 in keys else 0
         x_vel += cls.SPEED if 100 in keys else 0
