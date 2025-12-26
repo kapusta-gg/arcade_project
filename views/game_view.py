@@ -1,18 +1,22 @@
 import arcade
+from consts import *
 from entites.player import Player
+from entites.enemies.enemies import *
 
 
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.sprites = arcade.sprite_list.SpriteList()
+        self.sprites = arcade.SpriteList()
+        self.enemis = arcade.SpriteList()
         self.keys = set()
-        self.setup()
 
     def setup(self):
         arcade.set_background_color(arcade.color.FERN_GREEN)
         player = Player()
         self.sprites.append(player)
+
+        self._create_enemies(1)
 
     def on_draw(self):
         self.clear()
@@ -26,3 +30,12 @@ class GameView(arcade.View):
 
     def on_key_release(self, symbol, modifiers):
         self.keys.remove(symbol)
+
+    def _create_enemies(self, n: int) -> None:
+        for _ in range(n):
+            x, y = arcade.math.rand_in_rect(arcade.rect.XYWH(
+                WINDOW_SIZES[X] // 2, WINDOW_SIZES[Y] // 2,
+                WINDOW_SIZES[X] - PIXELS_BOARD, WINDOW_SIZES[Y] - PIXELS_BOARD))
+            enemy = Caterpillar(x, y)
+            self.sprites.append(enemy)
+            self.enemis.append(enemy)

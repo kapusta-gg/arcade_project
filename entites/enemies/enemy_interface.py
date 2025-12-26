@@ -1,0 +1,6 @@
+class EnemyInterface:
+    def death(self):
+        ...
+
+    def attack(self):
+        ...
