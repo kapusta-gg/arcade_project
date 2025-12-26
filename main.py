@@ -1,7 +1,6 @@
 import arcade
 from consts import *
 from views.start_view import StartView
-from views.game_view import GameView
 
 
 class MainWindow(arcade.Window):
@@ -9,9 +8,7 @@ class MainWindow(arcade.Window):
         super().__init__(width, height, title, resizable=False)
 
     def setup(self):
-        self._game = GameView()
-
-        self._start = StartView(self, self._game)
+        self._start = StartView(self)
         self.show_view(self._start)
 
 
