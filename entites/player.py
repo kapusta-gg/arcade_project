@@ -5,25 +5,46 @@ from PIL import Image
 
 
 class Player(arcade.Sprite):
-    IMAGE = Image.open(
-        "source/PNG/Players/Tiles/tile_0001.png").convert("RGBA")
-    SPEED = 20
+    IMAGE_PATH_WALK = ["source/PNG/Players/Tiles/tile_0000.png",
+                       "source/PNG/Players/Tiles/tile_0001.png", "source/PNG/Players/Tiles/tile_0002.png"]
+    SPEED = 50
+    TIMER_WALK_ANIM = 0.1
 
     def __init__(self):
-        super().__init__(arcade.Texture(self.IMAGE), 1,
-                         WINDOW_SIZES[0] // 2, WINDOW_SIZES[1] // 2)
+        super().__init__(
+            center_x=WINDOW_SIZES[X] // 2, center_y=WINDOW_SIZES[Y] // 2, scale=2)
         self._setup()
+        self.textures_walk = [arcade.load_texture(
+            text) for text in self.IMAGE_PATH_WALK]
+        self.texture_state = self.textures_walk[0]
+        self.texture = self.texture_state
 
     def _setup(self):
         self.velocity = 0, 0
+        self.walk_timer = 0
+        self.cur_anim = 0
+        self.rigth_walk = True
 
     def update(self, delta_time: float, keys: set):
-        self.velocity = Player._update_velocity(keys)
+        self.velocity = self._update_velocity(keys)
+        text = None
+        if self.velocity[X] != 0 or self.velocity[Y] != 0:
+            self.walk_timer += delta_time
+            if self.walk_timer >= self.TIMER_WALK_ANIM:
+                self.cur_anim = (self.cur_anim + 1) % len(self.textures_walk)
+                self.walk_timer = 0
+            text = self.textures_walk[self.cur_anim]
+        else:
+            text = self.texture_state
+
+        if not self.rigth_walk:
+            text = text.flip_left_right()
+        self.texture = text
+
         self.center_x = self.center_x + self.change_x * delta_time
         self.center_y = self.center_y + self.change_y * delta_time
 
-    @classmethod
-    def _update_velocity(cls, keys: set) -> tuple[int, int]:
+    def _update_velocity(self, keys: set) -> tuple[int, int]:
         '''
         Обновление вектора скорости игрока
 
@@ -33,8 +54,15 @@ class Player(arcade.Sprite):
         :rtype: tuple[int, int]
         '''
         x_vel = y_vel = 0
-        x_vel -= cls.SPEED if 97 in keys else 0
-        x_vel += cls.SPEED if 100 in keys else 0
-        y_vel -= cls.SPEED if 115 in keys else 0
-        y_vel += cls.SPEED if 119 in keys else 0
+
+        if arcade.key.A in keys:
+            x_vel -= self.SPEED
+            self.rigth_walk = False
+
+        if arcade.key.D in keys:
+            x_vel += self.SPEED
+            self.rigth_walk = True
+
+        y_vel -= self.SPEED if arcade.key.S in keys else 0
+        y_vel += self.SPEED if arcade.key.W in keys else 0
         return x_vel, y_vel

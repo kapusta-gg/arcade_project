@@ -10,6 +10,7 @@ class GameView(arcade.View):
         self.setup()
 
     def setup(self):
+        arcade.set_background_color(arcade.color.FERN_GREEN)
         player = Player()
         self.sprites.append(player)
 

@@ -1,1 +1,2 @@
 WINDOW_SIZES = 800, 600
+X, Y = 0, 1
