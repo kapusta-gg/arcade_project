@@ -9,7 +9,7 @@ def rewrite_settings(key: str, data_):
         data = json.load(r)
         data["settings"][key] = data_
     with open("settings.json", "w") as w:
-        w.write(json.dumps(data))
+        w.write(json.dumps(data, indent=4))
 
 
 class SettingsView(arcade.View):
@@ -43,7 +43,14 @@ class SettingsView(arcade.View):
         window_size = arcade.gui.UIDropdown(
             options=WINDOWS_OPTIONS, width=100, default=temp)
 
+        sound_vol_t = arcade.gui.UILabel(
+            text="Громкость музыки", width=50, text_color=arcade.color.RED)
+        temp = "x".join(map(str, self._window.size))
+        sound_vol = arcade.gui.UISlider(
+            value=SOUND_VOLUME, min_value=0, max_value=10, width=100, step=1)
+
         window_size.on_change = self.change_window
+        sound_vol.on_change = self.change_volume
 
         back_btn = arcade.gui.UIFlatButton(text="Назад", width=100)
 
@@ -51,6 +58,8 @@ class SettingsView(arcade.View):
 
         sett_grid.add(window_size_t, column=0, row=0)
         sett_grid.add(window_size, column=1, row=0)
+        sett_grid.add(sound_vol_t, column=0, row=1)
+        sett_grid.add(sound_vol, column=1, row=1)
 
         grid.add(sett_grid, column=0, row=0)
         grid.add(back_btn, column=0, row=1)
@@ -60,6 +69,11 @@ class SettingsView(arcade.View):
         x, y = list(map(int, event.new_value.split("x")))
         rewrite_settings("window_sizes", [x, y])
         self._window.size = (x, y)
+
+    def change_volume(self, event):
+        v = event.new_value
+        rewrite_settings("volume", v)
+        self._main.game_volume = v
 
     def back(self, event):
         self._main.update_ui()

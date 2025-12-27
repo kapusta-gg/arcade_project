@@ -1,5 +1,6 @@
 import arcade
 import arcade.gui
+from consts import *
 from views.settings_view import SettingsView
 from views.game_view import GameView
 
@@ -21,6 +22,7 @@ class StartView(arcade.View):
         self._window = _window
 
         self._settings = SettingsView(self._window, self)
+        self.game_volume = SOUND_VOLUME
 
         self.setup_ui()
         self.setup()

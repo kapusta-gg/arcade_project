@@ -1,1 +1,9 @@
-{"settings": {"window_sizes": [2000, 1080]}}
+{
+    "settings": {
+        "window_sizes": [
+            1280,
+            1024
+        ],
+        "volume": 8.0
+    }
+}
