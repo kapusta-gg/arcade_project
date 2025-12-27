@@ -36,6 +36,6 @@ class GameView(arcade.View):
             x, y = arcade.math.rand_in_rect(arcade.rect.XYWH(
                 WINDOW_SIZES[X] // 2, WINDOW_SIZES[Y] // 2,
                 WINDOW_SIZES[X] - PIXELS_BOARD, WINDOW_SIZES[Y] - PIXELS_BOARD))
-            enemy = Caterpillar(x, y, self.player)
+            enemy = Rabbit(x, y, self.player)
             self.sprites.append(enemy)
             self.enemis.append(enemy)
