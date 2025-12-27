@@ -32,6 +32,7 @@ class GameView(arcade.View):
         self.keys.remove(symbol)
 
     def _create_enemies(self, n: int) -> None:
+        WINDOW_SIZES = get_settings("window_sizes")
         for _ in range(n):
             x, y = arcade.math.rand_in_rect(arcade.rect.XYWH(
                 WINDOW_SIZES[X] // 2, WINDOW_SIZES[Y] // 2,

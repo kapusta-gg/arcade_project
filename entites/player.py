@@ -11,6 +11,7 @@ class Player(arcade.Sprite):
     TIMER_WALK_ANIM = 0.1
 
     def __init__(self):
+        WINDOW_SIZES = get_settings("window_sizes")
         super().__init__(
             center_x=WINDOW_SIZES[X] // 2, center_y=WINDOW_SIZES[Y] // 2, scale=2)
         self._setup()

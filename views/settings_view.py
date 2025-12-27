@@ -47,7 +47,7 @@ class SettingsView(arcade.View):
             text="Громкость музыки", width=50, text_color=arcade.color.RED)
         temp = "x".join(map(str, self._window.size))
         sound_vol = arcade.gui.UISlider(
-            value=SOUND_VOLUME, min_value=0, max_value=10, width=100, step=1)
+            value=get_settings("volume"), min_value=0, max_value=10, width=100, step=1)
 
         window_size.on_change = self.change_window
         sound_vol.on_change = self.change_volume

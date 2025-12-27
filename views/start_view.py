@@ -22,7 +22,7 @@ class StartView(arcade.View):
         self._window = _window
 
         self._settings = SettingsView(self._window, self)
-        self.game_volume = SOUND_VOLUME
+        self.game_volume = get_settings("volume")
 
         self.setup_ui()
         self.setup()
@@ -62,6 +62,7 @@ class StartView(arcade.View):
 
     def game_open(self, event):
         self._game = GameView()
+        self._game.setup()
         self._window.show_view(self._game)
 
     def settings_open(self, event):

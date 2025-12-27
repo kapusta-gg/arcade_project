@@ -13,6 +13,6 @@ class MainWindow(arcade.Window):
 
 
 if __name__ == "__main__":
-    window = MainWindow(*WINDOW_SIZES, "Main")
+    window = MainWindow(*get_settings("window_sizes"), "Main")
     window.setup()
     arcade.run()
