@@ -49,7 +49,7 @@ class StartView(arcade.View):
         self._game.setup()
         self._window.show_view(self._game)
 
-    def close(event):
+    def close(self, event):
         self._window.close()
 
     def on_show_view(self):
