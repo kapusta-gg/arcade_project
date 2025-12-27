@@ -5,21 +5,11 @@ from consts import *
 from entites.enemies.enemy_interface import EnemyInterface
 
 
-class Caterpillar(arcade.Sprite, EnemyInterface):
+class Caterpillar(EnemyInterface):
     IMAGE_PATH_WALK = ["source/PNG/Enemies/Tiles/tile_0000.png",
                        "source/PNG/Enemies/Tiles/tile_0001.png", "source/PNG/Enemies/Tiles/tile_0002.png"]
     SPEED = 40
     TIMER_WALK_ANIM = 0.1
-
-    def __init__(self, x, y, player: arcade.Sprite):
-        super().__init__(center_x=x, center_y=y, scale=2)
-        self._setup()
-        self.textures_walk = [arcade.load_texture(
-            text) for text in self.IMAGE_PATH_WALK]
-        self.texture_state = self.textures_walk[0]
-        self.texture = self.texture_state
-
-        self.player = player
 
     def _setup(self):
         self.velocity = 0, 0
