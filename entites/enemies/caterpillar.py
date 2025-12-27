@@ -48,8 +48,3 @@ class Caterpillar(arcade.Sprite, EnemyInterface):
 
         self.center_x = self.center_x + self.change_x * delta_time
         self.center_y = self.center_y + self.change_y * delta_time
-
-    def chase_player(self):
-        sign_x = np.sign(self.player.center_x - self.center_x)
-        sign_y = np.sign(self.player.center_y - self.center_y)
-        self.velocity = (sign_x * self.SPEED, sign_y * self.SPEED)
