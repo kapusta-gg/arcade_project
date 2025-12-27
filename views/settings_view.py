@@ -1,6 +1,15 @@
 import arcade
+import json
 import arcade.gui
 from consts import *
+
+
+def rewrite_settings(key: str, data_):
+    with open("settings.json", "r") as r:
+        data = json.load(r)
+        data["settings"][key] = data_
+    with open("settings.json", "w") as w:
+        w.write(json.dumps(data))
 
 
 class SettingsView(arcade.View):
@@ -30,8 +39,9 @@ class SettingsView(arcade.View):
 
         window_size_t = arcade.gui.UILabel(
             text="Размеры окна", width=50, text_color=arcade.color.RED)
+        temp = "x".join(map(str, self._window.size))
         window_size = arcade.gui.UIDropdown(
-            options=WINDOWS_OPTIONS, width=100, default=WINDOWS_OPTIONS[0])
+            options=WINDOWS_OPTIONS, width=100, default=temp)
 
         window_size.on_change = self.change_window
 
@@ -48,6 +58,7 @@ class SettingsView(arcade.View):
 
     def change_window(self, event):
         x, y = list(map(int, event.new_value.split("x")))
+        rewrite_settings("window_sizes", [x, y])
         self._window.size = (x, y)
 
     def back(self, event):
